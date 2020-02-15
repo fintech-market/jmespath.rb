@@ -37,6 +37,13 @@ module JMESPath
       def visit(value)
         nil
       end
+
+      def comparable?(left_value, right_value)
+        return if left_value.nil?
+
+        left_value.is_a?(Numeric) && right_value.is_a?(Numeric) ||
+          left_value.is_a?(String) && right_value.is_a?(String)
+      end
     end
 
     class EqCondition < ComparatorCondition
@@ -99,7 +106,7 @@ module JMESPath
       def visit(value)
         left_value = @left.visit(value)
         right_value = @right.visit(value)
-        left_value.is_a?(Numeric) && right_value.is_a?(Numeric) && left_value > right_value ? @child.visit(value) : nil
+        comparable?(left_value, right_value) && left_value > right_value ? @child.visit(value) : nil
       end
     end
 
@@ -109,7 +116,7 @@ module JMESPath
       def visit(value)
         left_value = @left.visit(value)
         right_value = @right.visit(value)
-        left_value.is_a?(Numeric) && right_value.is_a?(Numeric) && left_value >= right_value ? @child.visit(value) : nil
+        comparable?(left_value, right_value) && left_value >= right_value ? @child.visit(value) : nil
       end
     end
 
@@ -119,7 +126,7 @@ module JMESPath
       def visit(value)
         left_value = @left.visit(value)
         right_value = @right.visit(value)
-        left_value.is_a?(Numeric) && right_value.is_a?(Numeric) && left_value < right_value ? @child.visit(value) : nil
+        comparable?(left_value, right_value) && left_value < right_value ? @child.visit(value) : nil
       end
     end
 
@@ -129,7 +136,7 @@ module JMESPath
       def visit(value)
         left_value = @left.visit(value)
         right_value = @right.visit(value)
-        left_value.is_a?(Numeric) && right_value.is_a?(Numeric) && left_value <= right_value ? @child.visit(value) : nil
+        comparable?(left_value, right_value) && left_value <= right_value ? @child.visit(value) : nil
       end
     end
   end

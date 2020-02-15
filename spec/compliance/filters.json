@@ -108,6 +108,34 @@
     ]
   },
   {
+    "given": {
+      "locations": [
+        {"name": "Seattle", "state": "WA", "opened_on": "2010-10-15"},
+        {"name": "New York", "state": "NY", "opened_on": "2012-01-15"},
+        {"name": "Bellevue", "state": "WA", "opened_on": "2008-07-15"},
+        {"name": "Olympia", "state": "WA", "opened_on": "2013-04-30"}
+      ]
+    },
+    "cases": [
+      {
+        "expression": "locations[?opened_on >= '2012-01-15'].name",
+        "result": ["New York", "Olympia"]
+      },
+      {
+        "expression": "locations[?opened_on > '2012-01-15'].name",
+        "result": ["Olympia"]
+      },
+      {
+        "expression": "locations[?opened_on <= '2012-01-15'].name",
+        "result": ["Seattle", "New York", "Bellevue"]
+      },
+      {
+        "expression": "locations[?opened_on < '2012-01-15'].name",
+        "result": ["Seattle", "Bellevue"]
+      }
+    ]
+  },
+  {
     "given": {"foo": [{"top": {"name": "a"}},
       {"top": {"name": "b"}}]},
     "cases": [
