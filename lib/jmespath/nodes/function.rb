@@ -416,6 +416,29 @@ module JMESPath
       end
     end
 
+    class MapExtendFunction < Function
+      include TypeChecker
+
+      FUNCTIONS['map_extend'] = self
+
+      def call(args)
+        if args.count == 2
+          if get_type(args[0]) == ARRAY_TYPE && get_type(args[1]) == OBJECT_TYPE
+            array = args[0]
+            if array.size.zero? || array.all? { |value| get_type(value) == OBJECT_TYPE }
+              array.map { |value| value.merge(args[1]) }
+            else
+              maybe_raise Errors::InvalidTypeError, "function map_extend() expects an array of objects and an object"
+            end
+          else
+            maybe_raise Errors::InvalidTypeError, "function map_extend() expects an array of objects and an object"
+          end
+        else
+          maybe_raise Errors::InvalidArityError, "function map_extend() expects two arguments"
+        end
+      end
+    end
+
     class SortFunction < Function
       include TypeChecker
 

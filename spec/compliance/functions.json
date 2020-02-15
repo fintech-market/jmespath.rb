@@ -584,6 +584,30 @@
       "comment": "function projection on single arg function",
       "expression": "array[].to_number(@)",
       "result": [-1, 3, 4, 5, 100]
+    },
+    {
+      "expression": "map_extend(strings[].{string: @}, {foo: foo})",
+      "result": [
+        {"string": "a", "foo":  -1},
+        {"string": "b", "foo":  -1},
+        {"string": "c", "foo":  -1}
+      ]
+    },
+    {
+      "expression": "map_extend(strings[], {foo: foo})",
+      "error": "invalid-type"
+    },
+    {
+      "expression": "map_extend(strings[], 'foo')",
+      "error": "invalid-type"
+    },
+    {
+      "expression": "map_extend(strings[].{string: @}, 'foo')",
+      "error": "invalid-type"
+    },
+    {
+      "expression": "map_extend(strings[].{string: @}, ['foo'])",
+      "error": "invalid-type"
     }
   ]
 }, {
