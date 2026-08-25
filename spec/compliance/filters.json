@@ -519,5 +519,56 @@
         "result": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
       }
     ]
+  },
+  {
+    "given": {"foo": [{"length": 170},
+      {"length": 175.5},
+      {"length": 185}]},
+    "cases": [
+      {
+        "comment": "Less than number",
+        "expression": "foo[?length < `180`]",
+        "result": [{"length": 170}, {"length": 175.5}]
+      },
+      {
+        "comment": "Less than or equal to number",
+        "expression": "foo[?length <= `175.5`]",
+        "result": [{"length": 170}, {"length": 175.5}]
+      },
+      {
+        "comment": "Greater than number",
+        "expression": "foo[?length > `170`]",
+        "result": [{"length": 175.5}, {"length": 185}]
+      },
+      {
+        "comment": "Greater than or equal to number",
+        "expression": "foo[?length >= `175.5`]",
+        "result": [{"length": 175.5}, {"length": 185}]
+      }
+    ]
+  },
+  {
+    "given": {
+      "foo": ["2010-02-01", "2011-05-01"]
+    },
+    "cases": [
+      {
+        "comment": "Greater than with ISO 8601 date string",
+        "expression": "foo[?@ > '2010-06-01']",
+        "result": ["2011-05-01"]
+      }
+    ]
+  },
+  {
+    "given": {
+      "foo": [{"date": "2010-02-01"}, {"date": "2011-05-01"}]
+    },
+    "cases": [
+      {
+        "comment": "Greater than with ISO 8601 date string",
+        "expression": "foo[?date > '2010-06-01'].date",
+        "result": ["2011-05-01"]
+      }
+    ]
   }
 ]
